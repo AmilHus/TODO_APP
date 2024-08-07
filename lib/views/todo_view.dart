@@ -3,9 +3,8 @@ import 'package:todo_app/utils/adaptive_utils.dart';
 import 'package:todo_app/widgets/widgets.dart';
 
 class TodoView extends StatelessWidget with StyleMixin {
-  const TodoView({
-    super.key,
-  });
+  
+  const TodoView({super.key,});
 
   @override
   Widget build(BuildContext context) {

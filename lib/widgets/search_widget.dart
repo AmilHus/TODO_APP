@@ -21,7 +21,7 @@ class SearchWidget extends StatelessWidget with StyleMixin {
           style: AppTextStyles.body,
           controller: controller,
           onChanged: (_) {
-            context.read<TodoStore>().searchTask(controller.text);
+            context.read<TodoStore>().searchTodo(controller.text);
           },
           decoration: InputDecoration(
               contentPadding: EdgeInsets.only(left: 20 * widthSF(context)),

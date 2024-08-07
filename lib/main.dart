@@ -4,7 +4,7 @@ import 'package:todo_app/stores/todo_store.dart';
 import 'package:todo_app/styles/styles.dart';
 import 'package:todo_app/views/todo_view.dart';
 
-void main() {
+void main() async {
   runApp(ChangeNotifierProvider(
       create: (context) => TodoStore(), child: const MainApp()));
 }

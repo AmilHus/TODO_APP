@@ -7,7 +7,7 @@ import '../styles/styles.dart';
 
 class AddTodoWidget extends StatelessWidget with StyleMixin {
   const AddTodoWidget({super.key});
-
+  
   @override
   Widget build(BuildContext context) {
     final TextEditingController controller = TextEditingController();
@@ -32,7 +32,7 @@ class AddTodoWidget extends StatelessWidget with StyleMixin {
         FloatingActionButton(
           backgroundColor: AppColors.addButtonColor,
           onPressed: () {
-            context.read<TodoStore>().addTask(controller.text);
+            context.read<TodoStore>().addTodo(controller.text, DateTime.now().millisecondsSinceEpoch);
             controller.clear();
           },
           child: const Icon(

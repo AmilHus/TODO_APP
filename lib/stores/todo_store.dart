@@ -1,36 +1,58 @@
+
 import 'package:flutter/material.dart';
-import 'package:todo_app/models/todo_models.dart';
+import 'package:todo_app/models/todo_model.dart';
+
+import '../repository/todo_repository.dart';
 
 class TodoStore extends ChangeNotifier {
-  List<Task> get tasksList => Task.tasks;
-  List<Task> get filteredTasksList => Task.tasks;
+  final TodoRepository _todoRepository = TodoRepository();
 
-  void addTask(String taskContent) {
-    if (taskContent.isNotEmpty) {
-      tasksList.add(Task(content: taskContent, isDone: false));
+  List<TodoModel> filteredTodosList = [];
+  List<TodoModel> allTodosList = [];
+
+  TodoStore() {
+    fetchTodos();
+  }
+
+  void fetchTodos() async {
+    filteredTodosList = await _todoRepository.getAllTodos();
+    allTodosList = await _todoRepository.getAllTodos();
+    notifyListeners();
+  }
+
+  void updateTodoIsDone(TodoModel todo) async {
+    todo.isDone = !todo.isDone;
+    await _todoRepository.updateTodoIsCompleted(todo.id, todo.isDone);
+    notifyListeners();
+  }
+
+  void addTodo(String todoContent, int id) {
+    if (todoContent.isNotEmpty) {
+      final todo = TodoModel(id: id,content: todoContent);
+      filteredTodosList.add(todo);
+      _todoRepository.addTodo(todo);
       notifyListeners();
     }
   }
 
-  void removeTask(Task task) {
-    tasksList.remove(task);
+  void removeTodo(TodoModel todo,int id ) {
+    filteredTodosList.remove(todo);
+    _todoRepository.removeTodoById(id);
     notifyListeners();
+
   }
 
-  void toggleTask(Task task) {
-    task.isDone = !task.isDone;
-    notifyListeners();
-  }
-
-  void searchTask(String prompt) {
+  void searchTodo(String prompt) {
     if (prompt.isNotEmpty) {
-      filteredTasksList.clear();
-      filteredTasksList.addAll(tasksList.where((task) {
+      filteredTodosList.clear();
+      filteredTodosList.addAll(allTodosList.where((task) {
         return task.content.toLowerCase().contains(prompt.toLowerCase());
       }).toList());
       notifyListeners();
     } else {
-      filteredTasksList.addAll(tasksList);
+      filteredTodosList.clear();
+      filteredTodosList.addAll(allTodosList);
+      notifyListeners();
     }
   }
 }
