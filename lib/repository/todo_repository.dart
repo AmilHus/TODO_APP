@@ -2,21 +2,21 @@ import '../models/todo_model.dart';
 import '../db/todo_db.dart';
 
 class TodoRepository {
-  final TodoDBService _todoDB = TodoDBService();
+  TodoDBService todoDB = TodoDBService();
 
   Future<int> addTodo(TodoModel todo) {
-    return _todoDB.insertTodo(todo);
+    return todoDB.insertTodo(todo);
   }
 
   Future<int> removeTodoById(int id) {
-    return _todoDB.deleteTodo(id);
+    return todoDB.deleteTodo(id);
   }
 
   Future<List<TodoModel>> getAllTodos() {
-    return _todoDB.getTodos();
+    return todoDB.getTodos();
   }
 
    Future<int> updateTodoIsCompleted(int id, bool isDone) {
-    return _todoDB.updateTodoIsDone(id, isDone);
+    return todoDB.updateTodoIsDone(id, isDone);
   }
 }

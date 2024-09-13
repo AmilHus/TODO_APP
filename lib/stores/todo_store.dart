@@ -5,7 +5,7 @@ import 'package:todo_app/models/todo_model.dart';
 import '../repository/todo_repository.dart';
 
 class TodoStore extends ChangeNotifier {
-  final TodoRepository _todoRepository = TodoRepository();
+  TodoRepository todoRepository = TodoRepository();
 
   List<TodoModel> filteredTodosList = [];
   List<TodoModel> allTodosList = [];
@@ -15,29 +15,32 @@ class TodoStore extends ChangeNotifier {
   }
 
   void fetchTodos() async {
-    filteredTodosList = await _todoRepository.getAllTodos();
-    allTodosList = await _todoRepository.getAllTodos();
+    filteredTodosList.clear();
+    allTodosList.clear();
+    filteredTodosList = await todoRepository.getAllTodos();
+    allTodosList = await todoRepository.getAllTodos();
     notifyListeners();
   }
 
   void updateTodoIsDone(TodoModel todo) async {
     todo.isDone = !todo.isDone;
-    await _todoRepository.updateTodoIsCompleted(todo.id, todo.isDone);
+    await todoRepository.updateTodoIsCompleted(todo.id, todo.isDone);
+    fetchTodos();
     notifyListeners();
   }
 
   void addTodo(String todoContent, int id) {
     if (todoContent.isNotEmpty) {
       final todo = TodoModel(id: id,content: todoContent);
-      filteredTodosList.add(todo);
-      _todoRepository.addTodo(todo);
+      todoRepository.addTodo(todo);
+      fetchTodos();
       notifyListeners();
     }
   }
 
   void removeTodo(TodoModel todo,int id ) {
-    filteredTodosList.remove(todo);
-    _todoRepository.removeTodoById(id);
+    todoRepository.removeTodoById(id);
+    fetchTodos();
     notifyListeners();
 
   }
@@ -50,8 +53,7 @@ class TodoStore extends ChangeNotifier {
       }).toList());
       notifyListeners();
     } else {
-      filteredTodosList.clear();
-      filteredTodosList.addAll(allTodosList);
+      fetchTodos();
       notifyListeners();
     }
   }
