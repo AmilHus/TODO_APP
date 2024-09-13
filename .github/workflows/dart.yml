@@ -13,23 +13,24 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      # Установка Flutter SDK
+      # Install Flutter SDK
       - name: Install Flutter
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: 'latest' # Можно указать конкретную версию, если нужно
+          flutter-version: '3.13.0' # Specify a specific version if needed
+          channel: 'stable' # Optional, specify the channel
 
       - name: Install dependencies
         run: flutter pub get
 
-      # Проверка форматирования (раскомментируйте, если нужно)
+      # Check formatting (uncomment if needed)
       # - name: Verify formatting
       #   run: flutter format --set-exit-if-changed .
 
-      # Анализ кода с помощью Flutter
+      # Analyze project source with Flutter
       - name: Analyze project source
         run: flutter analyze
 
-      # Запуск тестов для Flutter проекта
+      # Run tests for the Flutter project
       - name: Run tests
         run: flutter test
