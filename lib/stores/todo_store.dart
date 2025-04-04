@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:todo_app/models/todo_model.dart';
 
@@ -37,18 +36,17 @@ class TodoStore extends ChangeNotifier {
 
   void addTodo(String todoContent, int id) {
     if (todoContent.isNotEmpty) {
-      final todo = TodoModel(id: id,content: todoContent);
+      final todo = TodoModel(id: id, content: todoContent);
       todoRepository.addTodo(todo);
       fetchTodos();
       notifyListeners();
     }
   }
 
-  void removeTodo(TodoModel todo,int id ) {
+  void removeTodo(TodoModel todo, int id) {
     todoRepository.removeTodoById(id);
     fetchTodos();
     notifyListeners();
-
   }
 
   void searchTodo(String prompt) {

@@ -5,14 +5,14 @@ import 'package:todo_app/stores/todo_store.dart';
 import 'package:todo_app/styles/styles.dart';
 import 'package:todo_app/utils/adaptive_utils.dart';
 
-class TodosListWidget extends StatefulWidget with StyleMixin {
+class TodosListWidget extends StatefulWidget {
   const TodosListWidget({super.key});
 
   @override
   State<TodosListWidget> createState() => _TodosListWidgetState();
 }
 
-class _TodosListWidgetState extends State<TodosListWidget> {
+class _TodosListWidgetState extends State<TodosListWidget> with StyleMixin {
   final TextEditingController _editingController = TextEditingController();
 
   @override
@@ -67,7 +67,8 @@ class _TodosListWidgetState extends State<TodosListWidget> {
                 ),
                 content: TextField(
                   autofocus: true,
-                  style: AppTextStyles.body.copyWith(color: AppColors.textColor),
+                  style:
+                      AppTextStyles.body.copyWith(color: AppColors.textColor),
                   controller: _editingController,
                   onChanged: (value) {
                     todo.content = value;
@@ -102,13 +103,18 @@ class _TodosListWidgetState extends State<TodosListWidget> {
             color: AppColors.deleteButtonBackgroundColor,
           )
         ]),
-        leading: Text(
-          todo.content,
-          style: AppTextStyles.body.copyWith(
-              decorationColor: AppColors.textDecorationColor,
-              decoration: todo.isDone
-                  ? TextDecoration.lineThrough
-                  : TextDecoration.none),
+        leading: SizedBox(
+          width: 250 * widthSF(context),
+          height: 23 * heightSF(context),
+          child: Text(
+            todo.content,
+            overflow: TextOverflow.ellipsis,
+            style: AppTextStyles.body.copyWith(
+                decorationColor: AppColors.textDecorationColor,
+                decoration: todo.isDone
+                    ? TextDecoration.lineThrough
+                    : TextDecoration.none),
+          ),
         ),
       ),
     );

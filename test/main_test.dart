@@ -1,5 +1,3 @@
-
-
 import 'package:flutter_test/flutter_test.dart';
 import 'package:todo_app/models/todo_model.dart';
 import 'package:todo_app/repository/todo_repository.dart';
@@ -11,7 +9,8 @@ class MockTodoDBService extends TodoDBService {
   @override
   Future<int> insertTodo(TodoModel todo) async {
     _todos.add(todo);
-    return Future.value(todo.id); // Simulates the insertion with returning the id
+    return Future.value(
+        todo.id); // Simulates the insertion with returning the id
   }
 
   @override
@@ -22,7 +21,8 @@ class MockTodoDBService extends TodoDBService {
 
   @override
   Future<List<TodoModel>> getTodos() async {
-    return Future.value(List.unmodifiable(_todos)); // Returns an immutable list of todos
+    return Future.value(
+        List.unmodifiable(_todos)); // Returns an immutable list of todos
   }
 
   @override
@@ -94,7 +94,8 @@ void main() {
       await todoRepository.updateTodoIsCompleted(todo.id, true);
 
       // Assert
-      final updatedTodo = (await mockDBService.getTodos()).firstWhere((t) => t.id == todo.id);
+      final updatedTodo =
+          (await mockDBService.getTodos()).firstWhere((t) => t.id == todo.id);
       expect(updatedTodo.isDone, true);
     });
   });

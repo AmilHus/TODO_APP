@@ -1,12 +1,11 @@
-
-class TodoModel{
+class TodoModel {
   int id;
   String content;
   bool isDone;
 
-  TodoModel({required this.id,required this.content, this.isDone = false});
+  TodoModel({required this.id, required this.content, this.isDone = false});
 
-    Map<String, dynamic> toMap() {
+  Map<String, dynamic> toMap() {
     return {
       'id': id,
       'content': content,
