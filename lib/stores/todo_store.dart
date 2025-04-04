@@ -9,8 +9,26 @@ class TodoStore extends ChangeNotifier {
   List<TodoModel> filteredTodosList = [];
   List<TodoModel> allTodosList = [];
 
+  String _currentEditingText = '';
+
+  bool get isEditable => _currentEditingText.isNotEmpty;
+
+  void updateEditingText(String newText) {
+    _currentEditingText = newText;
+    notifyListeners();
+  }
+
+  void clearEditingText() {
+    _currentEditingText = '';
+  }
+
+
   TodoStore() {
     fetchTodos();
+  }
+
+  bool isTodoListEmpty() {
+    return filteredTodosList.isEmpty;
   }
 
   void fetchTodos() async {
