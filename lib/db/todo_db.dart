@@ -19,6 +19,16 @@ class TodoDBService {
     );
   }
 
+  Future<int> editTodo(int id, String value) async {
+    final db = await _databaseHelper.database;
+    return await db.update(
+      'todos',
+      {'content': value},
+      where: 'id = ?',
+      whereArgs: [id],
+    );
+  }
+
   Future<int> deleteTodo(int id) async {
     final db = await _databaseHelper.database;
     return await db.delete('todos', where: 'id = ?', whereArgs: [id]);

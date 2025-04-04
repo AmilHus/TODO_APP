@@ -29,6 +29,12 @@ class TodoStore extends ChangeNotifier {
     notifyListeners();
   }
 
+  void editTodo(TodoModel todo) async {
+    await todoRepository.editTodo(todo.id, todo.content);
+    fetchTodos();
+    notifyListeners();
+  }
+
   void addTodo(String todoContent, int id) {
     if (todoContent.isNotEmpty) {
       final todo = TodoModel(id: id,content: todoContent);

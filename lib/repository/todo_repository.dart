@@ -16,7 +16,11 @@ class TodoRepository {
     return todoDB.getTodos();
   }
 
-   Future<int> updateTodoIsCompleted(int id, bool isDone) {
+  Future<int> updateTodoIsCompleted(int id, bool isDone) {
     return todoDB.updateTodoIsDone(id, isDone);
+  }
+
+  Future<int> editTodo(int id, String value) {
+    return todoDB.editTodo(id, value);
   }
 }
