@@ -1,5 +1,11 @@
 ## [1.1.1] - 2025-04-04
 ### Fixed
+- Fix the bug of editing todo
+- add animation
+- changed colors
+
+## [1.1.1] - 2025-04-04
+### Fixed
 - Fixed the bug of incorrect text display.
 
 ## [1.0.0] - 2025-04-04
