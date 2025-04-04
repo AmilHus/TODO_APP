@@ -1,3 +1,4 @@
+import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
@@ -81,14 +82,17 @@ class _TodosListWidgetState extends State<TodosListWidget> with StyleMixin {
         leading: SizedBox(
           width: 250 * widthSF(context),
           height: 23 * heightSF(context),
-          child: Text(
-            todo.content,
-            overflow: TextOverflow.ellipsis,
-            style: AppTextStyles.body.copyWith(
-                decorationColor: AppColors.textDecorationColor,
-                decoration: todo.isDone
-                    ? TextDecoration.lineThrough
-                    : TextDecoration.none),
+          child: SingleChildScrollView(
+    scrollDirection: Axis.horizontal,
+            child: Text(
+              todo.content,
+              overflow: TextOverflow.ellipsis,
+              style: AppTextStyles.body.copyWith(
+                  decorationColor: AppColors.textDecorationColor,
+                  decoration: todo.isDone
+                      ? TextDecoration.lineThrough
+                      : TextDecoration.none),
+            ),
           ),
         ),
       ),
@@ -98,12 +102,16 @@ class _TodosListWidgetState extends State<TodosListWidget> with StyleMixin {
   AlertDialog _buildEditDialog(TodoModel todo){
     return AlertDialog(
                 backgroundColor: AppColors.backgroundColor,
-                title: Text(
-                  'Edit Todo',
-                  style: AppTextStyles.body.copyWith(
-                    decorationColor: AppColors.textColor,
+                title:  AnimatedTextKit(animatedTexts: [
+                  TypewriterAnimatedText(
+                    'Edit Todo',
+                    textStyle: AppTextStyles.body.copyWith(
+                      color: AppColors.textColor,
+                      fontSize: 20 * widthSF(context),
+                    ),
+                    speed: const Duration(milliseconds: 100),
                   ),
-                ),
+                ],isRepeatingAnimation: false,),
                 content: TextField(
                   autofocus: true,
                   style:

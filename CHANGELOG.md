@@ -3,6 +3,7 @@
 - Fix the bug of editing todo
 - add animation
 - changed colors
+- add scrolls to Todos
 
 ## [1.1.1] - 2025-04-04
 ### Fixed
