@@ -1,4 +1,4 @@
-## [1.1.1] - 2025-04-04
+## [1.1.2] - 2025-04-04
 ### Fixed
 - Fix the bug of editing todo
 - add animation
