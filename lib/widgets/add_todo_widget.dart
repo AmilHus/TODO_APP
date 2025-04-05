@@ -20,7 +20,8 @@ class AddTodoWidget extends StatelessWidget with StyleMixin {
           controller: controller,
           style: AppTextStyles.body,
           decoration: InputDecoration(
-              contentPadding: EdgeInsets.only(left: 20 * widthSF(context),right: 20 * widthSF(context)),
+              contentPadding: EdgeInsets.only(
+                  left: 20 * widthSF(context), right: 20 * widthSF(context)),
               labelText: 'Add a new task',
               labelStyle: AppTextStyles.body,
               fillColor: AppColors.textColor,
@@ -29,18 +30,24 @@ class AddTodoWidget extends StatelessWidget with StyleMixin {
               )),
         )),
         SizedBox(width: 10 * heightSF(context)),
-        FloatingActionButton(
-          backgroundColor: AppColors.addButtonColor,
-          onPressed: () {
-            context.read<TodoStore>().addTodo(
-                controller.text, DateTime.now().millisecondsSinceEpoch);
-            controller.clear();
-          },
-          child: const Icon(
-            Icons.add,
-            color: AppColors.addIconColor,
-          ),
-        ),
+        Consumer<TodoStore>(builder: (context, todoStore, child) {
+          return FloatingActionButton(
+            backgroundColor: todoStore.isSearching
+                ? AppColors.textDecorationColor
+                : AppColors.addButtonColor,
+            onPressed: todoStore.isSearching
+                ? null
+                : () {
+                    todoStore.addTodo(
+                        controller.text, DateTime.now().millisecondsSinceEpoch);
+                    controller.clear();
+                  },
+            child: const Icon(
+              Icons.add,
+              color: AppColors.addIconColor,
+            ),
+          );
+        }),
         SizedBox(width: 10 * heightSF(context)),
       ],
     );

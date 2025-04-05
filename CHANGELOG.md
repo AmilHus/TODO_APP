@@ -1,3 +1,9 @@
+## [1.1.3] - 2025-04-05
+### Fixed
+- Fix shimmering
+- changed colors
+- add slide to todos
+
 ## [1.1.2] - 2025-04-04
 ### Fixed
 - Fix the bug of editing todo

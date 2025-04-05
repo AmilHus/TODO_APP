@@ -10,7 +10,9 @@ class TodoStore extends ChangeNotifier {
   List<TodoModel> allTodosList = [];
 
   String _currentEditingText = '';
+  String _searchPromptText = '';
 
+  bool get isSearching => _searchPromptText.isNotEmpty;
   bool get isEditable => _currentEditingText.isNotEmpty;
 
   void updateEditingText(String newText) {
@@ -21,7 +23,6 @@ class TodoStore extends ChangeNotifier {
   void clearEditingText() {
     _currentEditingText = '';
   }
-
 
   TodoStore() {
     fetchTodos();
@@ -41,14 +42,20 @@ class TodoStore extends ChangeNotifier {
 
   void updateTodoIsDone(TodoModel todo) async {
     todo.isDone = !todo.isDone;
+    filteredTodosList.where((element) => element.id == todo.id).first.isDone =
+        todo.isDone;
+    allTodosList.where((element) => element.id == todo.id).first.isDone =
+        todo.isDone;
     await todoRepository.updateTodoIsCompleted(todo.id, todo.isDone);
-    fetchTodos();
     notifyListeners();
   }
 
   void editTodo(TodoModel todo) async {
-    await todoRepository.editTodo(todo.id, todo.content);
-    fetchTodos();
+    filteredTodosList.where((element) => element.id == todo.id).first.content =
+        _currentEditingText;
+    allTodosList.where((element) => element.id == todo.id).first.content =
+        _currentEditingText;
+    await todoRepository.editTodo(todo.id, _currentEditingText);
     notifyListeners();
   }
 
@@ -56,25 +63,29 @@ class TodoStore extends ChangeNotifier {
     if (todoContent.isNotEmpty) {
       final todo = TodoModel(id: id, content: todoContent);
       todoRepository.addTodo(todo);
-      fetchTodos();
+      filteredTodosList.add(todo);
+      allTodosList.add(todo);
       notifyListeners();
     }
   }
 
   void removeTodo(TodoModel todo, int id) {
     todoRepository.removeTodoById(id);
-    fetchTodos();
+    filteredTodosList.removeWhere((element) => element.id == todo.id);
+    allTodosList.removeWhere((element) => element.id == todo.id);
     notifyListeners();
   }
 
   void searchTodo(String prompt) {
     if (prompt.isNotEmpty) {
+      _searchPromptText = prompt;
       filteredTodosList.clear();
       filteredTodosList.addAll(allTodosList.where((task) {
         return task.content.toLowerCase().contains(prompt.toLowerCase());
       }).toList());
       notifyListeners();
     } else {
+      _searchPromptText = '';
       fetchTodos();
       notifyListeners();
     }
