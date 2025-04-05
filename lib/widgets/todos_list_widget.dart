@@ -86,7 +86,8 @@ class _TodosListWidgetState extends State<TodosListWidget> with StyleMixin {
             ),
           ),
           child: ListTile(
-            trailing: Wrap(children: [
+            trailing: Wrap(
+              children: [
               Checkbox(
                 value: todo.isDone,
                 onChanged: (_) {
@@ -96,7 +97,7 @@ class _TodosListWidgetState extends State<TodosListWidget> with StyleMixin {
             ]),
             leading: SizedBox(
               width: 280 * widthSF(context),
-              height: 23 * heightSF(context),
+              height: 35 * heightSF(context),
               child: SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
                 child: Text(

@@ -1,3 +1,8 @@
+## [1.1.4] - 2025-04-05
+### Fixed
+- resize listTile
+- disable horizontal orientation
+
 ## [1.1.3] - 2025-04-05
 ### Fixed
 - Fix shimmering
